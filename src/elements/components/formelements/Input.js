@@ -39,7 +39,7 @@ const inputReducer = (state, action) => {
                 dispatch({
                     type: 'CHANGE',
                     val: event.target.value,
-                    validator: props.validators
+                    validators: props.validators
                 });
             };
             

@@ -44,9 +44,7 @@ const PlaceItem = props => {
             <div className="place-item__info address">
             <p>{props.address}</p>
             </div>
-            <div className="place-item__info description">
-            <p>{props.description}</p>
-            </div>
+            
         </div>
         <div className="place-item__action">
  

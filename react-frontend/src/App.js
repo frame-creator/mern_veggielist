@@ -65,6 +65,9 @@ if (isLoggedIn) {
        <Route path="/auth" exact> 
        <Auth/>
        </Route>
+       <Route path="/places/:placeId">
+          <UpdatePlace />
+        </Route>
       <Redirect to="/auth"/>
       </Switch>
   );

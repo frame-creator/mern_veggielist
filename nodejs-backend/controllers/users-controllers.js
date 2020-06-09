@@ -16,18 +16,29 @@ const User = require('../models/user');
 //}
 //];
 
-const getUsers = async (req, res, next) => {
-let users;
-try{    
-users = await User.find({}, '-password');
-// res.json({ users: DUMMY_USERS });
-} catch (err) {
-const error = new HttpError(
-    '정보를 가져오지 못했습니다. 다시 시도해주세요.', 500
-);
-return next(error);
-}
-res.json({users : users.map(user => user.toObject({getters: true}) )});
+const getUserByUserId = async (req, res, next) => {
+    const userId = req.params.uid;
+
+    let user;
+    try {
+      user = await User.findById(userId, '-password');
+
+    } catch (err) {
+        const error = new HttpError(
+            '해당 프로필을 찾을 수 없습니다.',
+            500
+        );
+        return next(error);
+    }
+    if (!user) {
+        const error = new HttpError(
+            '해당 아이디로 프로필을 찾을 수 없습니다.',
+            404
+        );
+        return next(error);
+    }
+    res.json({user: user.toObject({getters: true})});
+    
 };
 
 
@@ -154,7 +165,7 @@ if (!existingUser ) {
 let isValidPassword = false;
 try {
 isValidPassword = await bcrypt.compare(password, existingUser.password);
-} catch (error) {
+} catch (err) {
     const error = new HttpError(
         '로그인이 되지 않았습니다. 유효한 정보인지 확인 후 다시 시도해주세요.',
         500
@@ -200,6 +211,6 @@ token: token
 });
 };
 
-exports.getUsers = getUsers;
+exports.getUserByUserId = getUserByUserId;
 exports.signup = signup;
 exports.login = login;

@@ -8,21 +8,22 @@ const getCoordsForAddress = require('../util/location');
 const Place = require('../models/place');
 const User = require('../models/user');
 
-
-//let DUMMY_PLACES = [
-//    {
-//        id: 'p1',
-//        title: '엠파이어 스테이트 빌딩',
-//        description: '초고층 빌딩',
-//        location: {
-//           lat: 40.7484474,
-//            lng: -73.9871516
-//        },
-//        address: '뉴욕',
-//        creator: 'u1',
-//    
-//    }
-//];
+const getPlaces = async (req, res, next ) => {
+    let places;
+    try {
+      places = await Place.find();
+  
+  
+    }  catch (err) {
+      const error = new HttpError (
+      '장소를 불러오지 못했습니다. 다시 시도해주세요.',
+      500
+      );
+      return next(error);
+  
+    }
+    res.json({places : places.map(place => place.toObject({getters: true}))});
+  }
 
 const getPlaceById = async (req, res, next) => {
     const placeId = req.params.pid;
@@ -295,7 +296,7 @@ res.status(200).json({message: '장소가 삭제되었습니다.'} );
 
 };
 
- 
+exports.getPlaces = getPlaces;
   exports.getPlaceById = getPlaceById;
   exports.getPlacesByUserId = getPlacesByUserId;
   exports.createPlace = createPlace;

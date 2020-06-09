@@ -1,0 +1,33 @@
+.user-item {
+    margin: 1rem;
+    width: 30vw;
+    height: 30vw;
+    
+    
+    
+  }
+
+.user-item__content {
+    padding: 1rem;
+}
+
+
+.user-item__image img{
+width: 10vw;
+height: 10vw;
+margin-right: 1rem;
+border-radius: 50%;
+text-align: center;
+display: block; margin: 0px auto;
+
+
+}
+
+.user-item__info {
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: normal;
+    color: #ffd900;
+    text-align: center;
+   
+  }

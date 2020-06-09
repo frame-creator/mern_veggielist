@@ -1,0 +1,10 @@
+.user-places-table{
+margin : 0 20vw 0 0;
+padding: 0;
+}
+
+.user-places-table__title {
+font-family: 'Arita-dotum-Medium' ;
+font-size: 20px;
+
+}

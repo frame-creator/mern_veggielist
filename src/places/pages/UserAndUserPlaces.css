@@ -1,0 +1,12 @@
+.user-and-userplaces{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  
+    padding: 0;
+}
+
+
+.user-and-userplaces__places{
+    margin-left: 25vw;
+}

@@ -1,0 +1,106 @@
+@font-face { font-family: 'BBTreeGB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'HangeulNuri-Bold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'GmarketSansMedium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'TTTogether'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/TTTogetherA.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+.place-item{
+    /* margin : 1rem 1rem; */
+    display: flex;
+    flex-direction: column;
+    background-color :white;
+    /* #f3ca7d;*/
+    border: 1px solid white;
+    border-radius: 5px;
+    /* padding: 25px; */
+    cursor: pointer;
+   /* backface-visibility: hidden; */
+    transform: translateZ(0);
+    transition: transfrom 0.25s ease-out;
+}
+
+.place-item__content {
+    padding: 0 ;
+    width: 20vw;
+ 
+}
+.place-item__info {
+    padding: 0.3rem;
+    margin-left: 0.3rem;
+    text-align: left;
+}
+
+/*img {
+  height: 20vw;
+  width: 20vw;
+  overflow: hidden;
+  box-sizing: cover;
+  object-fit: cover;
+  border-top-left-radius: 5%;
+  border-top-right-radius: 5%;
+}
+*/
+.place-item__image {
+   /* height: 20vw;
+    width: 20vw;
+    overflow: hidden;
+    box-sizing: cover;
+    object-fit: cover; */
+    
+    width: 100%;
+    height: 20vw;
+   
+  }
+  .place-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%; 
+  }
+
+.place-item__info p {
+    margin: 0 0 0 0 ;
+    font-family: 'Arita-dotum-Medium'
+
+
+}
+
+.place-item__info .title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 0.3rem;
+
+
+
+}
+.place-item__info .address {
+    font-size: 20px;
+   
+}
+
+.place-item__action {
+    font-family: 'Arita-dotum-Medium';
+    font-size: 15px;
+    
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-left: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  /*   margin: 3rem;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;*/
+    
+}
+
+.map-container {
+  height: 15rem;
+  width: 100%;
+}
+
+

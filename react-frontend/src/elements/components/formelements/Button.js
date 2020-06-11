@@ -39,6 +39,6 @@ ${props.danger && 'button--danger'}`}
             {props.children}
         </button>
     ); 
-    }
+    };
 
     export default Button;

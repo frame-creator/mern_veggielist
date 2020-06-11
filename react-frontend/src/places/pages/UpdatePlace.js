@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 
 import Input from '../../elements/components/formelements/Input';
 import Button from '../../elements/components/formelements/Button';
@@ -8,6 +8,8 @@ import {
     VALIDATOR_REQUIRE,
     VALIDATOR_MINLENGTH
 } from '../../elements/util/validators';
+import LoadingSpinner from '../../elements/components/uielements/LoadingSpinner';
+
 import { useForm } from '../../elements/hooks/form-hook';
 import './UpdatePlace.css';
 

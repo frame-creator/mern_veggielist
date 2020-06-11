@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import UserPlaceList from '../components/UserPlaceList';
+import LoadingSpinner from '../../elements/components/uielements/LoadingSpinner';
+import {useHttpClient} from '../../elements/hooks/http-hook';
+
+
 
 import './UserPlaces.css';
-    const DUMMY_PLACES =[
+
+
+/* const DUMMY_PLACES =[
     {id: 'p1',
 title: '솔밭식당',
 description: '한정식과 건강식을 함께 즐길 수 있는 곳',
@@ -74,19 +80,50 @@ lng :127.0405894
 creator: 'u6'
     },
     ];
-
+*/
     const UserPlaces = () => { 
-
+const [loadedUserPlaces, setLoadedUserPlaces] = useState();
+const {isLoading, error, sendRequest, clearError } = useHttpClient();
 const userId = useParams().userId;
-const loadedPlaces = DUMMY_PLACES.filter(place => place.creator === userId);
+
+useEffect (() => {
+    const fetchUserPlaces = async () => {
+        try {
+        const responseData = await sendRequest(
+            `https://tebackend.herokuapp.com/places/${userId}`
+        );
+        setLoadedUserPlaces(responseData.places);
+        } catch (err) {}
+    };
+    fetchUserPlaces();
+},[sendRequest, userId]);
+
+const placeDeletedHandler = deletedPlaceId => {
+    setLoadedUserPlaces(prevPlaces =>
+        prevPlaces.filter(place => place.id !== deletedPlaceId)
+        );
+};
+
 
     return (
+        <React.Fragment>
+    {isLoading && (
+        <div className="center">
+            <LoadingSpinner/>
+        </div>
+    )}
+    {!isLoading && loadedUserPlaces && (
+
+    
     <div className="user-places-table">
     <div className="user-places-table__title">
         <h3>내가 등록한 식당</h3>
     </div>
-    <UserPlaceList items={loadedPlaces}  />
-    </div> )
+    <UserPlaceList items={loadedUserPlaces}  onDeletePlace={placeDeletedHandler}/>
+    </div> 
+    )}
+    </React.Fragment>
+    );
 };
 
 export default UserPlaces;

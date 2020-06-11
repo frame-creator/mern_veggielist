@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
   next();
 } catch (err) {
      const error = new HttpError 
-     ('인증이 되지 않았습니다.', 401);
+     ('인증이 되지 않았습니다.', 403);
      return next(error);
  }
 

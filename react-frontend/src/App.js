@@ -1,5 +1,5 @@
 
-import React, {useState, useCallback} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 import Places from './places/pages/Places';
 import UserAndUserPlaces from './places/pages/UserAndUserPlaces';
@@ -9,9 +9,11 @@ import Auth from './user/pages/Auth';
 import UpdatePlace from './places/pages/UpdatePlace';
 import './App.css';
 import {AuthContext} from './elements/context/auth-context';
+import {useAuth} from './elements/hooks/auth-hook';
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const App = () => {
+  const { token, login, logout, userId} = useAuth();
+  /* const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login= useCallback(
     () => {
@@ -25,10 +27,11 @@ function App() {
       setIsLoggedIn(false);
     },[]
   );
+*/
 
   let routes;
 
-if (isLoggedIn) {
+if (token) {
   routes= (
     <Switch>
      <Route path="/" exact> 
@@ -42,8 +45,8 @@ if (isLoggedIn) {
        <Route path="/places/new" exact> 
        <NewPlace/>
        </Route>
-       <Route path="/auth" exact> 
-       <Auth/>
+       <Route path="/places/:placeId" > 
+       <UpdatePlace/>
        </Route>
       <Redirect to="/"/>
       </Switch>
@@ -56,18 +59,17 @@ if (isLoggedIn) {
       
        
        </Route>
-       <Route path="/:userId/places" exact>
-       <UserAndUserPlaces/>
+       <Route path="/auth" exact>
+       <Auth/>
           </Route>
-       <Route path="/places/new" exact> 
-       <NewPlace/>
-       </Route>
-       <Route path="/auth" exact> 
+       <Route path="auth" exact> 
        <Auth/>
        </Route>
-       <Route path="/places/:placeId">
-          <UpdatePlace />
-        </Route>
+       <Route path="/auth"> 
+       <Auth/>
+       </Route>
+       
+        
       <Redirect to="/auth"/>
       </Switch>
   );
@@ -75,7 +77,13 @@ if (isLoggedIn) {
 
   return (
    <AuthContext.Provider
-   value={{isLoggedIn: isLoggedIn, login: login, logout: logout}}
+   value={{
+    isLoggedIn: !!token, 
+    token: token, 
+    userId: userId, 
+    login: login, 
+    logout: logout
+  }}
   >
     <Router>
       <MainNavigation/>
@@ -83,6 +91,6 @@ if (isLoggedIn) {
     </Router>
   </AuthContext.Provider>
   );
-}
+};
 
 export default App;

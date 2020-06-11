@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PlaceList from '../components/PlaceList';
+import ErrorModal from '../../elements/components/uielements/ErrorModal';
+import LoadingSpinner from '../../elements/components/uielements/LoadingSpinner';
+import {useHttpClient} from '../../elements/hooks/http-hook';
 
-
-    const DUMMY_PLACES =[
+   /* const DUMMY_PLACES =[
     {id: 'p1',
 title: '솔밭식당',
 description: '한정식과 건강식을 함께 즐길 수 있는 곳',
@@ -73,13 +75,38 @@ lng :127.0405894
 creator: 'u6'
     },
     ];
-
+*/
     const Places = () => { 
 
+const {isLoading, error, sendRequest, clearError} = useHttpClient();
+const [loadedPlaces, setLoadedPlaces] = useState();
+
+useEffect (() => {
+    const fetchPlaces = async() => {
+        try {
+            const responseData = await sendRequest (
+                'http://localhost:5000/api/places'
+               
+            );
+
+            setLoadedPlaces(responseData.places);
+        } catch (err) {}
+    };
+    fetchPlaces();
+}, [sendRequest]);
 
 
-
-    return <PlaceList items={DUMMY_PLACES}  />;
+    return (
+<React.Fragment>
+ 
+    {isLoading && (
+        <div className ="center">
+            <LoadingSpinner/>
+        </div>
+    )}
+    {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces}/>}
+</React.Fragment>
+    );
 };
 
 export default Places;

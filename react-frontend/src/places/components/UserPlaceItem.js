@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import './UserPlaceItem.css';
 import Card from '../../elements/components/uielements/Card';
 import Button from '../../elements/components/formelements/Button';
 import Modal from '../../elements/components/uielements/Modal';
 import Map from '../../elements/components/uielements/Map';
 import './UserPlaceItem.css';
+import LoadingSpinner from '../../elements/components/uielements/LoadingSpinner';
+import {useHttpClient} from '../../elements/hooks/http-hook';
+import { AuthContext } from '../../elements/context/auth-context';
 
 const UserPlaceItem = props => {
+const {isLoading, error, sendRequest, clearError} = useHttpClient();
+const auth = useContext( AuthContext );
 const [showMap, setShowMap] = useState(false);
 const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -21,10 +26,20 @@ const cancelDeleteHandler = () => {
     setShowConfirmModal(false);
 }
 
-const confirmDeleteHandler = () => {
+const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
-    console.log('deleting');
-}
+    try {
+        await sendRequest(
+            `http://localhost:5000/api/places/${props.id}`,
+            'DELETE',
+            null,
+            {
+                Authorization: 'Bearer' + auth.token
+            }
+        );
+        props.onDelete(props.id);
+    } catch (err) {}
+};
 
     return (
 
@@ -71,6 +86,7 @@ const confirmDeleteHandler = () => {
     
     <li className="user-place-item">
         <Card className="user-place-item__content">
+            {isLoading && <LoadingSpinner asOverlay/>}
         <div className="user-place-item__image">
             <img src={props.image} alt={props.title}/>
       </div>
@@ -91,7 +107,10 @@ const confirmDeleteHandler = () => {
             <div className="user-place-item__button">
             <Button inverse to ={`/places/${props.id}`}>수정</Button></div>
             <div className="user-place-item__button">
-            <Button danger onClick={showDeleteWarningHandler}>삭제</Button></div>
+                {auth.userId === props.creatorId && (
+            <Button danger onClick={showDeleteWarningHandler}>삭제</Button>
+                )}
+            </div>
            </div>
        
         </Card>

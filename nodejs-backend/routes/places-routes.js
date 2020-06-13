@@ -16,7 +16,7 @@ router.get('/user/:uid',placesControllers.getPlacesByUserId);
 router.use(checkAuth);
 
 router.post(
-'/',
+'/new',
 fileUpload.single('image'),
 [
 check('title').not().isEmpty(),

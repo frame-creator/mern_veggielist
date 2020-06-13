@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
 
 import Input from '../../elements/components/formelements/Input';
@@ -9,10 +9,13 @@ import {
     VALIDATOR_MINLENGTH
 } from '../../elements/util/validators';
 import LoadingSpinner from '../../elements/components/uielements/LoadingSpinner';
-
+import ErrorModal from '../../elements/components/uielements/LoadingSpinner';
 import { useForm } from '../../elements/hooks/form-hook';
 import './UpdatePlace.css';
+import { useHttpClient} from '../../elements/hooks/http-hook';
+import {AuthContext} from '../../elements/context/auth-context';
 
+/*
 const DUMMY_PLACES =[
     {id: 'p1',
 title: '솔밭식당',
@@ -84,11 +87,14 @@ lng :127.0405894
 creator: 'u6'
     },
     ];
-
+*/
 
     const UpdatePlace = () => {
-        const [isLoading, setIsLoading] = useState(true);
+        const auth = useContext(AuthContext);
+        const {isLoading, error, sendRequest, clearError} = useHttpClient();
+        const [loadedPlace, setLoadedPlace] = useState();
         const placeId = useParams().placeId;
+        const history = useHistory();
 
         const [formState, inputHandler, setFormData] = useForm(
         {
@@ -104,7 +110,7 @@ creator: 'u6'
         false
         );
 
-    const identifiedPlace = DUMMY_PLACES.find(p => p.id === placeId);
+    /* const identifiedPlace = DUMMY_PLACES.find(p => p.id === placeId); 
 
 
     useEffect(() => {
@@ -148,8 +154,76 @@ if(isLoading) {
         </div>
     );
 }
+*/
+
+useEffect(() => {
+    const fetchPlace = async () => {
+        try {
+            const responseData = await sendRequest(
+                `http://localhost:5000/api/places/${placeId}`
+            );
+            setLoadedPlace(responseData.place);
+            setFormData(
+                {
+                    title: {
+                        value: responseData.place.title,
+                        isValid: true
+                    },
+                    description : {
+                        value: responseData.place.description,
+                        isValid: true
+                    }
+                },
+                true
+            );
+        } catch(err) { }
+    };
+    fetchPlace();
+}, [sendRequest, placeId, setFormData]);
+
+const placeUpadateSubmitHandler = async event => {
+    event.preventDefault();
+    try {
+        await sendRequest(
+            `http://localhost:5000/api/places/${placeId}`,
+            'PATCH',
+            JSON.stringify({
+                title: formState.inputs.title.value,
+                description: formState.inputs.description.value
+            }),
+            {
+                'Content-Type' : 'application/json',
+                Authorization: 'Bearer ' + auth.token
+            }
+        );
+        history.push('/' + auth.userId + '/places');
+    } catch (err) {}
+
+            };
+
+   if (isLoading) {
+       return (
+           <div className = "center">
+           <LoadingSpinner/>
+           </div>
+       );
+   }     
+   
+   if (!loadedPlace && !error) {
+       return (
+           <div className="center">
+           <Card>
+           <h2>해당 맛집을 찾을 수 없습니다.</h2>
+           </Card>
+           </div>
+       );
+   }
+        
 
 return (
+    <React.Fragment>
+        <ErrorModal error={error} onClear={clearError}/>
+        {!isLoading && loadedPlace && (
     <form className="place-form" onSubmit={placeUpadateSubmitHandler}>
         <Input
         id="title"
@@ -157,27 +231,29 @@ return (
         type="text"
         label="식당 이름"
         validators={[VALIDATOR_REQUIRE()]}
-        errorText="변경할 식당 이름을 입력해주세요."
+        errorText="변경할 맛집 이름을 입력해주세요."
         onInput={inputHandler}
-        initialValue={formState.inputs.title.value}
-        initialValid={formState.inputs.title.isValid}
+        initialValue = {loadedPlace.title}
+        initialValid = {true}
         />
 
         <Input
         id="description"
         element="textarea"
         label="자세한 설명"
-        validator={[VALIDATOR_MINLENGTH(5)]}
-        errorText="변경할 설명을 입력해주세요."
+        validators={[VALIDATOR_MINLENGTH(5)]}
+        errorText="변경할 맛집 설명을 5글자 이상 입력해주세요."
         onInput={inputHandler}
-        initialValue={formState.inputs.description.value}
-        initialValid={formState.inputs.description.isValid}
+        initialValue={loadedPlace.description}
+        initialValid={true}
    />
    <Button type="submit" disabled={!formState.isValid}>
        업데이트
    </Button>
     </form>
-)
+        )}
+</React.Fragment>
+);
 
     };
 

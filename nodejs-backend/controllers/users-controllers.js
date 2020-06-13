@@ -119,7 +119,7 @@ try{
 token = jwt.sign(
 { userId : createdUser.id, 
     email: createdUser.email}, 
-'supersecret_dont_share', 
+    process.env.JWT_TOKEN, 
 {expiresIn : '1h'}
 );
 } catch (err) {
@@ -192,7 +192,7 @@ let token;
 try{
 token = jwt.sign(
 {userId : existingUser.id, email: existingUser.email}, 
-'supersecret_dont_share', 
+process.env.JWT_TOKEN, 
 {expiresIn : '1h'}
 );
 } catch (err) {

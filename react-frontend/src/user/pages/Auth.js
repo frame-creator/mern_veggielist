@@ -112,9 +112,9 @@ const Auth = () => {
               element="input"
               id="name"
               type="text"
-              label="Your Name"
+              label="프로필명"
               validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter a name."
+              errorText="프로필 별명을 입력해주세요."
               onInput={inputHandler}
             />
           )}
@@ -123,33 +123,33 @@ const Auth = () => {
               center
               id="image"
               onInput={inputHandler}
-              errorText="Please provide an image."
+              errorText="프로필 이미지를 등록해주세요."
             />
           )}
           <Input
             element="input"
             id="email"
             type="email"
-            label="E-Mail"
+            label="이메일"
             validators={[VALIDATOR_EMAIL()]}
-            errorText="Please enter a valid email address."
+            errorText="이메일 주소를 적어주세요."
             onInput={inputHandler}
           />
           <Input
             element="input"
             id="password"
             type="password"
-            label="Password"
-            validators={[VALIDATOR_MINLENGTH(6)]}
-            errorText="Please enter a valid password, at least 6 characters."
+            label="비밀번호"
+            validators={[VALIDATOR_MINLENGTH(5)]}
+            errorText="5글자 이상 비밀번호를 적어주세요."
             onInput={inputHandler}
           />
           <Button type="submit" disabled={!formState.isValid}>
-            {isLoginMode ? 'LOGIN' : 'SIGNUP'}
+            {isLoginMode ? '로그인' : '회원가입'}
           </Button>
         </form>
         <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
+          {isLoginMode ? '회원가입' : '로그인'} 화면으로 변경
         </Button>
       </Card>
     </React.Fragment>

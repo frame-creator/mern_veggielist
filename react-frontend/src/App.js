@@ -3,6 +3,8 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 import Places from './places/pages/Places';
 import UserAndUserPlaces from './places/pages/UserAndUserPlaces';
+
+
 import NewPlace from './places/pages/NewPlace';
 import MainNavigation from './elements/navigation/MainNavigaton';
 import Auth from './user/pages/Auth';
@@ -41,6 +43,7 @@ if (token) {
        </Route>
        <Route path="/:userId/places" exact>
             <UserAndUserPlaces/>
+            
           </Route>
        <Route path="/places/new" exact> 
        <NewPlace/>
@@ -62,8 +65,8 @@ if (token) {
        <Route path="/auth" exact>
        <Auth/>
           </Route>
-       <Route path="auth" exact> 
-       <Auth/>
+       <Route path="/places/new" exact> 
+       <NewPlace/>
        </Route>
        <Route path="/auth"> 
        <Auth/>

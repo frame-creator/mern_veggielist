@@ -3,7 +3,10 @@
     width: 30vw;
     height: 30vw;
     
+    list-style: none;
     
+    justify-content: center;
+    flex-wrap: wrap;
     
   }
 

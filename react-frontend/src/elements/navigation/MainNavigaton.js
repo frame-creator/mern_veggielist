@@ -12,7 +12,7 @@ const MainNavigation = props => {
          
          
       <h1 className="main-navigation__title">
-        <Link to="/">베지식당</Link>
+        <Link to="/">베지리스트</Link>
       </h1>
       <nav className="main-navigation__header-nav">
        <NavLinks/>

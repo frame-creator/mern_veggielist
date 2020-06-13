@@ -8,3 +8,9 @@ font-family: 'Arita-dotum-Medium' ;
 font-size: 20px;
 
 }
+
+.map-container {
+    height: 15rem;
+    width: 100%;
+  }
+  

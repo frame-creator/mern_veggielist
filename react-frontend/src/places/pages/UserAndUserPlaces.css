@@ -1,12 +1,15 @@
 .user-and-userplaces{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
   
-    padding: 0;
+    padding: 2vw;
 }
 
 
+.user-and-userplaces__title{
+    margin-left: 5vw;
+}
 .user-and-userplaces__places{
-    margin-left: 25vw;
+    margin-left: 5vw;
 }

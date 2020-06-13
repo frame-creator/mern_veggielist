@@ -9,8 +9,8 @@ const UserPlaceList = props => {
     if (props.items.length === 0) {
 return ( <div className="user-place-list center">
 <Card>
-    <h2>등록하신 장소가 없습니다. 새로운 장소를 등록해주세요.</h2>
-<button>장소 등록하기</button>
+    <h2>등록하신 맛집이 없습니다. 새로운 맛집을 등록해주세요.</h2>
+<button>맛집 등록하기</button>
 </Card>
 </div>
  ); } 

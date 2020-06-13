@@ -9,34 +9,34 @@ const auth = useContext(AuthContext);
 return ( <ul className="nav-links">
     <li>
         <NavLink to ="/" exact >
-            채식 식당 전체
+            채식 맛집 전체
         </NavLink>
     </li>
     {auth.isLoggedIn && (
     <li>
       <NavLink to ={`/${auth.userId}/places`}>
-            내가 등록한 식당
+            내가 등록한 맛집
     </NavLink>
     </li> 
     )}
     {auth.isLoggedIn && (
     <li>
       <NavLink to ="/places/new"  >
-            채식 식당 등록하기
+            채식 맛집 등록하기
     </NavLink>
     </li>
     )}
     {!auth.isLoggedIn && (
     <li>
       <NavLink to ="/auth">
-            내가 등록한 식당
+            내가 등록한 맛집
     </NavLink>
     </li> 
     )}
     {!auth.isLoggedIn && (
     <li>
-      <NavLink to ="/auth"  >
-            채식 식당 등록하기
+      <NavLink to ="/places/new"  >
+            채식 맛집 등록하기
     </NavLink>
     </li>
     )}

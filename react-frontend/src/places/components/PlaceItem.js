@@ -1,18 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import './PlaceItem.css';
 import Card from '../../elements/components/uielements/Card';
 import Button from '../../elements/components/formelements/Button';
 import Modal from '../../elements/components/uielements/Modal';
 import Map from '../../elements/components/uielements/Map';
+import ErrorModal from '../../elements/components/uielements/ErrorModal';
+import LoadingSpinner from '../../elements/components/uielements/LoadingSpinner';
+import {AuthContext} from '../../elements/context/auth-context';
+import {useHttpClient} from '../../elements/hooks/http-hook';
+
+
+
+
 
 const PlaceItem = props => {
-
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+    const auth = useContext(AuthContext);
     const [showMap, setShowMap] = useState(false);
+    
+    
     const openMapHandler = () => setShowMap(true);
     const closeMapHandler = () => setShowMap(false);
-
+    
+    
    return(
        <React.Fragment>
+    <ErrorModal error={error} conClear={clearError}/>
    <Modal
     show={showMap}
     onCancel={closeMapHandler}
@@ -29,13 +42,14 @@ const PlaceItem = props => {
         </div>
 
     </Modal>
-
+   
 
 
    <li className="place-item">
         <Card className="place-item__content">
         <div className="place-item__image">
-            <img src={props.image} alt={props.title}/>
+            <img src={`http://localhost:5000/${props.image}`} alt={props.title}/>
+    
       </div>
         <div className="place-item__info">
         <div className="place-item__info title">

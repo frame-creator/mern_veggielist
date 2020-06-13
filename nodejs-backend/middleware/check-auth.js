@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
      if (!token) {
          throw new Error('인증이 되지 않았습니다.');
      }
-  const decodedToken =  jwt.verify(token, 'supersecret_dont-share' );
+  const decodedToken =  jwt.verify(token,  process.env.JWT_TOKEN );
   req.userData = { userId: decodedToken.userId};
   next();
 } catch (err) {

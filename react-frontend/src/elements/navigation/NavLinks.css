@@ -29,3 +29,9 @@
  
  
 }
+
+.nav-links button {
+    background-color: white;
+    border-color: aliceblue;
+    font-size: 17px;
+}

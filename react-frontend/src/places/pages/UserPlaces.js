@@ -90,7 +90,7 @@ useEffect (() => {
     const fetchUserPlaces = async () => {
         try {
         const responseData = await sendRequest(
-            `https://tebackend.herokuapp.com/places/${userId}`
+            `http://localhost:5000/api/places/user/${userId}`
         );
         setLoadedUserPlaces(responseData.places);
         } catch (err) {}
@@ -117,7 +117,7 @@ const placeDeletedHandler = deletedPlaceId => {
     
     <div className="user-places-table">
     <div className="user-places-table__title">
-        <h3>내가 등록한 식당</h3>
+        <h3>내가 등록한 맛집</h3>
     </div>
     <UserPlaceList items={loadedUserPlaces}  onDeletePlace={placeDeletedHandler}/>
     </div> 

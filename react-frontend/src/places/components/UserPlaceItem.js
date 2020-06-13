@@ -5,6 +5,7 @@ import Button from '../../elements/components/formelements/Button';
 import Modal from '../../elements/components/uielements/Modal';
 import Map from '../../elements/components/uielements/Map';
 import './UserPlaceItem.css';
+import ErrorModal from '../../elements/components/uielements/ErrorModal';
 import LoadingSpinner from '../../elements/components/uielements/LoadingSpinner';
 import {useHttpClient} from '../../elements/hooks/http-hook';
 import { AuthContext } from '../../elements/context/auth-context';
@@ -34,7 +35,7 @@ const confirmDeleteHandler = async () => {
             'DELETE',
             null,
             {
-                Authorization: 'Bearer' + auth.token
+                Authorization: 'Bearer ' + auth.token
             }
         );
         props.onDelete(props.id);
@@ -44,6 +45,7 @@ const confirmDeleteHandler = async () => {
     return (
 
         <React.Fragment>
+            <ErrorModal error={error} onClear={clearError}/>
             <Modal
             show={showMap}
             onCancel={closeMapHandler}
@@ -79,7 +81,7 @@ const confirmDeleteHandler = async () => {
             }
             >
                 <p>
-                    장소를 삭제하시는 경우 복원이 어렵습니다.
+                   등록 맛집을 삭제하시는 경우 복원이 어렵습니다.
                 </p>
             </Modal>
     
@@ -88,7 +90,7 @@ const confirmDeleteHandler = async () => {
         <Card className="user-place-item__content">
             {isLoading && <LoadingSpinner asOverlay/>}
         <div className="user-place-item__image">
-            <img src={props.image} alt={props.title}/>
+            <img src={`http://localhost:5000/${props.image}`} alt={props.title}/>
       </div>
         <div className="user-place-item__info">
         <div className="user-place-item__info title">
@@ -105,7 +107,10 @@ const confirmDeleteHandler = async () => {
         <div className="user-place-item__button">
             <Button onClick={openMapHandler}>지도 확인</Button></div>
             <div className="user-place-item__button">
-            <Button inverse to ={`/places/${props.id}`}>수정</Button></div>
+            {auth.userId === props.creatorId && (
+            <Button inverse to ={`/places/${props.id}`}>수정</Button>
+            )}
+            </div>
             <div className="user-place-item__button">
                 {auth.userId === props.creatorId && (
             <Button danger onClick={showDeleteWarningHandler}>삭제</Button>

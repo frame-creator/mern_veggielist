@@ -1,4 +1,4 @@
-# 🥗 채식식당 공유 서비스, [베지리스트](http://veggielist.herokuapp.com/)
+# 🥗 채식식당 공유 서비스, 베지리스트
 
 
 </br>
